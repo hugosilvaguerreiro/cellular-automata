@@ -24,11 +24,18 @@ typedef struct {
 } RGBA;
 
 
+class MouseHandler {
+    public:
+    virtual void onLeftClick(int mousex, int mousey) {}
+    virtual void onRightClick(int mousex, int mousey) {}
+};
+
 class Application;
 class Renderer {
         sf::Image         current_frame;
         sf::Texture       current_frame_texture;
         sf::Sprite        current_frame_sprite;
+        MouseHandler* handler;
 
     public:
         WINDOW_SIZE       size;
@@ -46,6 +53,8 @@ class Renderer {
             Checks if any relevant event has happened
         */
         void checkEvents();
+
+        void registerMouseHandler(MouseHandler& handler);
 
         /*
             Used to set the color of a pixel in the current frame
@@ -67,7 +76,10 @@ class Renderer {
 
 
 class Application {
+        Application(const Application&) = delete;
     public:
+    
+
         Renderer* renderer;
         Application(Renderer& renderer) { this->renderer = &renderer; }
         virtual void execute() = 0;

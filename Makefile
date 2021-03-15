@@ -26,3 +26,10 @@ clean:
 run: clean $(BIN)
 	$(BIN)
 
+valgrind:
+	valgrind --show-leak-kinds=all \
+         --track-origins=yes \
+         --verbose \
+         --log-file=valgrind-out.txt \
+         $(BIN)
+

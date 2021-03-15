@@ -7,6 +7,9 @@ class Sand : public Cell {
     public:
         Sand(int x, int y) : Cell(x,y) {}
 
+        ~Sand()  {}
+
+
         void simulate(Neighbors n) override {
             Cell* new_cell = this;
             if(n.down->getType() == EMPTY_CELL) {

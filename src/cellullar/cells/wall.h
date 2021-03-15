@@ -6,6 +6,7 @@
 class Wall : public Cell {
     public:
         Wall() : Cell() {}
+        ~Wall() {}
         Wall(int posx, int posy) : Cell(posx, posy) {}
 
         void simulate(Neighbors n) override {

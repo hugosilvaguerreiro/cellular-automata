@@ -41,6 +41,7 @@ inline bool drawTime(int i, int j) {
 
 class World {
     std::vector<std::vector<Cell*>> world;
+    
 
     public:
         int size_x; int size_y;
@@ -59,6 +60,16 @@ class World {
                     }
                 }
                 this->world.push_back(v);
+            }
+
+        }
+
+        ~World() {
+            for(int i =0; i < size_x; i++) {
+                for(int j = 0; j < size_y; j++) {
+                    Cell* c = world.at(i).at(j);
+                    delete c;
+                }
             }
         }
 
@@ -87,7 +98,7 @@ class World {
                 this->getCell(x+1,y), //right
                 this->getCell(x,y-1), //up
                 this->getCell(x-1,y-1), //up left
-                this->getCell(x-1,y+1), //up right 
+                this->getCell(x+1,y-1), //up right 
                 this->getCell(x,y+1), //down
                 this->getCell(x-1,y+1), //down left
                 this->getCell(x+1,y+1), //down right

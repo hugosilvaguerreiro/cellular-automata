@@ -4,6 +4,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Window.hpp>
 #include <string>
 
@@ -68,11 +69,20 @@ void Renderer::renderSquare(int x, int y, int size, RGBA color, bool stroke, int
 void Renderer::checkEvents() {
     
     sf::Event event;
-    while (this->window.pollEvent(event))
-    {
+    while (this->window.pollEvent(event)) {
         if (event.type == sf::Event::Closed)
             this->window.close();
     }
+
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        sf::Vector2i position = sf::Mouse::getPosition(this->window);
+        this->handler->onLeftClick(position.x, position.y);
+
+    }
+}
+
+void Renderer::registerMouseHandler(MouseHandler &handler) {
+    this->handler = &handler;
 }
 
 
@@ -108,5 +118,6 @@ void Renderer::start(Application& app) {
         app.execute();
         this->window.clear();
     }
+    app.stop();
 }
 
